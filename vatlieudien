@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trắc nghiệm Vật Liệu Điện IUH</title>
+<style>
+body{font-family:Arial;background:#eef3f8;margin:0;padding:20px;color:#172033}
+main{max-width:700px;margin:auto;background:white;padding:24px;border-radius:16px;box-shadow:0 4px 18px #ccd3df}
+h1{color:#1769aa;text-align:center}
+button{padding:12px 18px;border:0;border-radius:8px;background:#1769aa;color:white;cursor:pointer;margin:8px 4px}
+.option{display:block;width:100%;text-align:left;background:#f0f5fa;color:#172033;border:1px solid #d5dfeb}
+.option:hover{background:#dcecff}
+#result{font-weight:bold;font-size:20px}
+</style>
+</head>
+<body>
+<main>
+<h1>Trắc nghiệm Vật Liệu Điện</h1>
+<p>Ôn tập giữa kỳ – IUH</p>
+<div id="quiz"></div>
+<div id="result"></div>
+</main>
+<script>
+const questions = [
+{q:"Đơn vị SI của điện trở suất là gì?",a:["Ω","Ω·m","S/m","V/m"],c:1},
+{q:"Đồng có cấu trúc tinh thể nào?",a:["Lập phương tâm khối","Lập phương tâm mặt","Lục giác xếp chặt","Tứ phương"],c:1},
+{q:"Đồng không tinh khiết được dùng làm gì khi tinh chế điện phân?",a:["Catôt","Anôt","Chất cách điện","Không dùng làm điện cực"],c:1},
+{q:"Kim loại nào có nhiệt độ nóng chảy cao nhất trong các lựa chọn?",a:["Nhôm","Đồng","Vonfram","Kẽm"],c:2},
+{q:"Magiê có mạng tinh thể nào ở điều kiện thường?",a:["Lập phương tâm khối","Lập phương tâm mặt","Lục giác xếp chặt","Vô định hình"],c:2}
+];
+let index=0,score=0,answered=false;
+function show(){
+ answered=false;
+ const q=questions[index];
+ document.getElementById("result").textContent="";
+ document.getElementById("quiz").innerHTML=
+ `<h3>Câu ${index+1}/${questions.length}: ${q.q}</h3>`+
+ q.a.map((x,i)=>`<button class="option" onclick="answer(${i})">${"ABCD"[i]}. ${x}</button>`).join("")+
+ `<p><button onclick="next()">Câu tiếp theo →</button></p>`;
+}
+function answer(i){
+ if(answered)return;
+ answered=true;
+ if(i===questions[index].c)score++;
+ document.getElementById("result").textContent=
+ i===questions[index].c?"Chính xác!":"Chưa đúng. Đáp án: "+"ABCD"[questions[index].c];
+}
+function next(){
+ if(!answered){alert("Hãy chọn một đáp án trước!");return;}
+ index++;
+ if(index>=questions.length){
+ document.getElementById("quiz").innerHTML="<h2>Đã hoàn thành!</h2><button onclick='restart()'>Làm lại</button>";
+ document.getElementById("result").textContent=`Điểm: ${score}/${questions.length}`;
+ return;
+ }
+ show();
+}
+function restart(){index=0;score=0;show();}
+show();
+</script>
+</body>
+</html>
